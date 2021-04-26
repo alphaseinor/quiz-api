@@ -4,21 +4,24 @@ const quizzes = require('../../data/quizzes.json');
  * Returns a list of quizzes with titles and IDs
  */
 async function getQuizzes(req, res, next) {
-  // TODO: Your code goes here
+  console.log("quizzes")
+  res.status(200).json({message:"quizzes"})
 }
 
 /** 
  * Returns quiz data for the given ID, omitting the answers
  */
 async function getQuiz(req, res, next) {
-  // TODO: Your code goes here
+  console.log("quiz")
+  res.status(200).json({message:"quiz", param: "id: " + req.params.id})
 }
 
 /**
  * Handles a quiz submission and returns a graded result
  */
 async function postQuiz(req, res, next) {
-  // TODO: Your code goes here
+  console.log("post quiz")
+  res.status(200).json({message:"post quiz", param: "id: " + req.params.id})
 }
 
 module.exports = {
