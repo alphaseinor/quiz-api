@@ -4,8 +4,13 @@ const quizzes = require('../../data/quizzes.json');
  * Returns a list of quizzes with titles and IDs
  */
 async function getQuizzes(req, res, next) {
-  console.log("quizzes")
-  res.status(200).json({message:"quizzes"})
+  const quizzesObject = Object.values(quizzes)
+  res.status(200).json(quizzesObject.map(quiz=>{
+    return {
+      id: quiz.id, 
+      title: quiz.title
+    }
+  }))
 }
 
 /** 
