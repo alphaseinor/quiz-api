@@ -18,8 +18,19 @@ async function getQuizzes(req, res, next) {
  * Returns quiz data for the given ID, omitting the answers
  */
 async function getQuiz(req, res, next) {
-  console.log("quiz")
-  res.status(200).json({message:"quiz", param: "id: " + req.params.id})
+  const quizObject = quizzes[req.params.id]
+  const returnObj = {
+    id: quizObject.id,
+    title: quizObject.title,
+    questions: quizObject.questions.map((question)=>{
+      return {
+        id: question.id,
+        title: question.title,
+        options: question.options
+      }
+    })
+  }
+  res.status(200).json(returnObj)
 }
 
 /**
