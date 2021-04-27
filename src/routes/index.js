@@ -6,6 +6,7 @@ const quizzes = require('../../data/quizzes.json');
  
 async function getQuizzes(req, res, next) {
   const quizzesObject = Object.values(quizzes)
+  
   res.status(200).json(quizzesObject.map(quiz=>{
     return {
       id: quiz.id, 
