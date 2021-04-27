@@ -39,11 +39,12 @@ async function getQuiz(req, res, next) {
 async function postQuiz(req, res, next) {
   const answerKeys = Object.keys(req.body.answers)
 
-  //initial correct answers
+  // initial correct answers
   let correct = 0
-  //initial incorrect answers
-  // honestly should be set to quizzes[req.params.id].questions.length - answerKeys.length because they didn't answer a question
-  let incorrect = 0 
+  // initial incorrect answers
+  // Should be set to questions length to accommodate non-submitted answers
+  // this is out of supplied specification, but makes no sense not to
+  
   
   questions = {}
 
@@ -56,14 +57,16 @@ async function postQuiz(req, res, next) {
         correct++
       } else {
         questions = {...questions, [question.id]: false}
-        incorrect++
       }
+    } else {
+      //answer was not submitted
+      questions = {...questions, [question.id]: false}
     }
   }); 
 
   res.status(200).json({
     correct,
-    incorrect,
+    incorrect: (quizzes[req.params.id].questions.length - correct),
     questions
   })
 }
