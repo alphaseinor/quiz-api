@@ -3,6 +3,21 @@ const server = require("../api/server.js")
 const quizzes = require('../../data/quizzes.json')
 
 /** 
+ * GET root Endpoint
+ */
+
+ describe("GET quizzes endpoint", () => {
+   it("should return a status of 200", (done) =>{
+    request(server)
+    .get("/")
+    .then(res=>{
+      expect(res.status).toBe(200)
+      done()
+    })
+   })
+ })
+
+/** 
  * GET Quizzes List Endpoint
  */
 
@@ -151,7 +166,6 @@ describe("POST quizzes/math endpoint", ()=>{
       .post("/api/quizzes/math/attempt")
       .send(correctObject)
       .then(res=>{
-        console.log(res.body)
         expect(res.status).toBe(200)
         done()
       })
@@ -182,7 +196,6 @@ describe("POST quizzes/math endpoint", ()=>{
       .post("/api/quizzes/math/attempt")
       .send(incorrectObject)
       .then(res=>{
-        console.log(res.body)
         expect(res.body["correct"]).toBe(0)
         done()
       })
