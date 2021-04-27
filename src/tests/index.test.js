@@ -1,29 +1,40 @@
-const {getQuizzes, getQuiz, postQuiz} = require('../routes');
+const request = require("supertest");
+const server = require("../api/server.js")
+const quizzes = require('../../data/quizzes.json')
 
-describe('API', () => {
-  describe('getQuizzes', () => {
-    it('returns a list of quizzes', () => {
-      // TODO: Your code goes here
-      expect(false).toBeTruthy();
-    });
+describe("default route", () => {
+  it("should return a status of 200", (done) => {
+    request(server)
+      .get("/api/quizzes")
+      .then(res=>{
+        expect(res.status).toBe(200)
+        done()
+      })
   });
-
-  describe('getQuiz', () => {
-    it('returns the data for a quiz', () => {
-      // TODO: Your code goes here
-      expect(false).toBeTruthy();
-    });
-
-    it('returns a 404 if the quiz cannot be found', () => {
-      // TODO: Your code goes here
-      expect(false).toBeTruthy();
-    });
+  it("should return JSON", (done) => {
+    request(server)
+      .get("/api/quizzes")
+      .then(res=>{
+        expect(res.type).toMatch(/json/i)
+        done()
+      })
   });
-
-  describe('postQuiz', () => {
-    it('returns the correct grades for the quiz', () => {
-      // TODO: Your code goes here
-      expect(false).toBeTruthy();
-    });
-  });
+  it("passes cycle count", (done) =>{
+    request(server)
+      .get('/api/quizzes')
+      .then(res=>{
+        expect(res.body.length).toBe(Object.values(quizzes).length)
+        done()
+      })
+  })
+  it("has correct shape", (done) =>{
+    request(server)
+      .get('/api/quizzes')
+      .then(res=>{
+        expect(Object.keys(res.body[1])).toContain('id')
+        expect(Object.keys(res.body[1])).toContain('title')
+        done()
+      })
+  })
+  
 });
