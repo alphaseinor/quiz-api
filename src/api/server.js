@@ -3,7 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
 const Routes = require('../routes');
-const { validateID } = require('../util/middleware');
+const { validateID, validateQuizPostShape } = require('../util/middleware');
 
 const server = express();
 
@@ -17,6 +17,6 @@ server.get('/', (req, res) => res.sendFile(path.join(__dirname, '../README.md'))
 server.get('/api/quizzes', Routes.getQuizzes);
 
 server.get('/api/quizzes/:id', validateID, Routes.getQuiz);
-server.post('/api/quizzes/:id/attempt', validateID, Routes.postQuiz);
+server.post('/api/quizzes/:id/attempt', validateID, validateQuizPostShape, Routes.postQuiz);
 
 module.exports = server

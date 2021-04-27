@@ -13,4 +13,17 @@ const validateID = (req, res, next) => {
     }
 }
 
-module.exports = {validateID}
+/**
+ * Confirms POST shape is valid
+ */
+
+const validateQuizPostShape = (req, res, next) => {
+    if(req.body.answers){
+        next()
+    }else{
+        res.status(404).json({message: `Sorry, you must provide an answers object which contains questions.id:questions.option[] pairs received from the /quizzes/id GET request`})
+    }
+}
+
+
+module.exports = {validateID, validateQuizPostShape}

@@ -37,8 +37,35 @@ async function getQuiz(req, res, next) {
  * Handles a quiz submission and returns a graded result
  */
 async function postQuiz(req, res, next) {
-  console.log("post quiz")
-  res.status(200).json({message:"post quiz", param: "id: " + req.params.id})
+  const answerKeys = Object.keys(req.body.answers)
+
+  //initial correct answers
+  let correct = 0
+  //initial incorrect answers
+  // honestly should be set to quizzes[req.params.id].questions.length - answerKeys.length because they didn't answer a question
+  let incorrect = 0 
+  
+  questions = {}
+
+  quizzes[req.params.id].questions.forEach(question => {
+    //determine if question is in the list of provided answers
+    if(answerKeys.includes(question.id)){
+      //determine if answer provided is correct
+      if(req.body.answers[question.id] == question.answer ){
+        questions = {...questions, [question.id]: true}
+        correct++
+      } else {
+        questions = {...questions, [question.id]: false}
+        incorrect++
+      }
+    }
+  }); 
+
+  res.status(200).json({
+    correct,
+    incorrect,
+    questions
+  })
 }
 
 module.exports = {
