@@ -1,23 +1,9 @@
-const express = require('express');
-const helmet = require('helmet');
-const cors = require('cors');
-const path = require('path');
-const Routes = require('./routes');
+const server = require('./api/server.js')
 
 const port = process.env.PORT || 3000;
-const app = express();
 
-app.use(helmet());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'build')));
-app.use(cors());
+//separate the listen from the server so it can test properly
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../README.md')));
-
-app.get('/api/quizzes', Routes.getQuizzes);
-app.get('/api/quizzes/:id', Routes.getQuiz);
-app.post('/api/quizzes/:id/attempt', Routes.postQuiz);
-
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
