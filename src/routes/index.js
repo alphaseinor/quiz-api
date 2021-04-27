@@ -41,10 +41,6 @@ async function postQuiz(req, res, next) {
 
   // initial correct answers
   let correct = 0
-  // initial incorrect answers
-  // Should be set to questions length to accommodate non-submitted answers
-  // this is out of supplied specification, but makes no sense not to
-  
   
   questions = {}
 
