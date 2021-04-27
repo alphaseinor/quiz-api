@@ -19,18 +19,18 @@ async function getQuizzes(req, res, next) {
  */
 async function getQuiz(req, res, next) {
   const quizObject = quizzes[req.params.id]
-  const returnObj = {
+
+  res.status(200).json({
     id: quizObject.id,
     title: quizObject.title,
     questions: quizObject.questions.map((question)=>{
       return {
         id: question.id,
-        title: question.title,
-        options: question.options
+        title: question.text,
+        questions: question.options
       }
     })
-  }
-  res.status(200).json(returnObj)
+  })
 }
 
 /**

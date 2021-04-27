@@ -16,9 +16,6 @@ server.get('/', (req, res) => res.sendFile(path.join(__dirname, '../README.md'))
 
 server.get('/api/quizzes', Routes.getQuizzes);
 
-//middleware for verifying body has valid id
-
-
 server.get('/api/quizzes/:id', validateID, Routes.getQuiz);
 server.post('/api/quizzes/:id/attempt', validateID, Routes.postQuiz);
 
